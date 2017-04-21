@@ -1,8 +1,7 @@
 require 'bundler/setup'
 require 'faker'
-Dir['lib/**/*.rb'].each { |f| require f.gsub(/lib\//, '') }
-Dir['spec/helpers/**/*.rb'].each { |f| require f.gsub(/spec\//, '') }
-
+Dir['lib/**/*.rb'].each { |f| require f.gsub(%r{lib\/}, '') }
+Dir['spec/helpers/**/*.rb'].each { |f| require f.gsub(%r{spec\/}, '') }
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

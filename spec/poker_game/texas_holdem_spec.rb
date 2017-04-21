@@ -2,13 +2,13 @@ require 'spec_helper'
 
 RSpec.describe PokerGame::TexasHoldem do
   let(:players) do
-    Helpers::PlayerFactory.new.create(5) do 
+    Helpers::PlayerFactory.new.create(5) do
       { name: Faker::LordOfTheRings.character }
     end
   end
 
-  let(:duplicated_players) do 
-    Helpers::PlayerFactory.new.create(2) do 
+  let(:duplicated_players) do
+    Helpers::PlayerFactory.new.create(2) do
       { id: 1, name: Faker::LordOfTheRings.character }
     end
   end

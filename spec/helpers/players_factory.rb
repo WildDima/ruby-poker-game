@@ -1,6 +1,8 @@
 require 'spec_helper'
 
+# temp spec helper
 module Helpers
+  # temp spec helper
   class PlayerFactory
     def create(number = 0)
       return unless block_given?

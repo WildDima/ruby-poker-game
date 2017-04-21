@@ -2,3 +2,6 @@ AllCops:
   Exclude:
     - ruby-poker-game.gemspec
     - Rakefile
+
+Metrics/LineLength:
+  Max: 100

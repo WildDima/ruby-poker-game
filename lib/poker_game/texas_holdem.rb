@@ -1,4 +1,5 @@
 module PokerGame
+  # Class which implenets TexasHoldem
   class TexasHoldem
     attr_reader :players
 
