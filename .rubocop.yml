@@ -1,0 +1,4 @@
+AllCops:
+  Exclude:
+    - ruby-poker-game.gemspec
+    - Rakefile
