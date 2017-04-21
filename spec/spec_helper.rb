@@ -1,5 +1,8 @@
 require 'bundler/setup'
-require 'poker_game'
+require 'faker'
+Dir['lib/**/*.rb'].each { |f| require f.gsub(/lib\//, '') }
+Dir['spec/helpers/**/*.rb'].each { |f| require f.gsub(/spec\//, '') }
+
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
