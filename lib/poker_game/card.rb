@@ -1,6 +1,7 @@
 require 'workflow'
 
 module PokerGame
+  # Card
   class Card
     include Workflow
 
@@ -14,7 +15,6 @@ module PokerGame
     attr_accessor :value
 
     def initialize(value:)
-
       @value = create_card value
     end
 

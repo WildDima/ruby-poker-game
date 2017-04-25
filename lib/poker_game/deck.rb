@@ -1,6 +1,7 @@
 require 'workflow'
 
 module PokerGame
+  # Deck
   class Deck
     include Workflow
 
@@ -31,11 +32,11 @@ module PokerGame
     end
 
     def in_game
-      @deck.select { |card| card.in_game? }
+      @deck.select(&:in_game?)
     end
 
     def in_deck
-      @deck.select { |card| card.in_deck? }
+      @deck.select(&:in_deck?)
     end
 
     def preflop
@@ -45,19 +46,19 @@ module PokerGame
 
     def flop
       to_flop!
-      self.flop_cards = in_deck.shuffle.first(3).map(&:give_out!)
+      self.flop_cards = in_deck.sample(3).map(&:give_out!)
       self
     end
 
     def turn
       to_turn!
-      self.turn_cards = in_deck.shuffle.first(1).each(&:give_out!)
+      self.turn_cards = in_deck.sample(1).each(&:give_out!)
       self
     end
 
     def river
       to_river!
-      self.river_cards = in_deck.shuffle.first(1).each(&:give_out!)
+      self.river_cards = in_deck.sample(1).each(&:give_out!)
       self
     end
 

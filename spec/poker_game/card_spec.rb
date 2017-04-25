@@ -11,8 +11,8 @@ RSpec.describe PokerGame::Card do
 
   it 'should transfer to state in_game' do
     expect { card.give_out! }.to change { card.current_state.name }
-                                  .from(:in_deck)
-                                  .to(:in_game)
+      .from(:in_deck)
+      .to(:in_game)
   end
 
   it 'should raise error' do

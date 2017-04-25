@@ -2,7 +2,7 @@ require 'spec_helper'
 
 RSpec.describe PokerGame::Deck do
   context 'deck' do
-    subject { described_class.new  }
+    subject { described_class.new }
     let(:deck) { subject.deck }
 
     it 'should countain 50 deck' do
@@ -13,7 +13,7 @@ RSpec.describe PokerGame::Deck do
   end
 
   context 'flop' do
-    subject { described_class.new  }
+    subject { described_class.new }
     let(:flop) { subject.preflop.flop }
     let(:deck) { subject.deck }
     let(:in_game) { subject.in_game }
@@ -30,7 +30,7 @@ RSpec.describe PokerGame::Deck do
   end
 
   context 'turn' do
-    subject { described_class.new  }
+    subject { described_class.new }
     let(:turn) { subject.preflop.flop.turn }
     let(:deck) { subject.deck }
     let(:in_game) { subject.in_game }
@@ -47,7 +47,7 @@ RSpec.describe PokerGame::Deck do
   end
 
   context 'river' do
-    subject { described_class.new  }
+    subject { described_class.new }
     let(:river) { subject.preflop.flop.turn.river }
     let(:deck) { subject.deck }
     let(:in_game) { subject.in_game }
