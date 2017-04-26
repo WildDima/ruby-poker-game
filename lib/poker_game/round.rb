@@ -59,9 +59,8 @@ module PokerGame
     def winner
       return unless river?
 
-      players.map do |player|
-        { player: player, hand: PokerHand.new(player.cards + table.cards) }
-      end.sort_by { |p| p[:hand] }.first[:player].player
+      players.map { |p| { player: p, hand: PokerHand.new(p.cards + table.cards) } }
+             .sort_by { |p| p[:hand] }.first[:player].player
     end
 
     private
