@@ -6,7 +6,7 @@ RSpec.describe PokerGame::Deck do
     let(:deck) { subject.deck }
 
     it 'should countain 52 cards' do
-      expect(deck.size).to eq(48)
+      expect(deck.size).to eq(52)
       expect(deck.map(&:state)).to include(:in_deck)
       expect(deck.map(&:state)).not_to include(:in_game)
     end

@@ -35,7 +35,7 @@ RSpec.describe PokerGame::Round do
       expect(subject.flop?).to be_truthy
       expect(current_deck.deck.map(&:state)).to include(:in_game)
       expect(in_game.size).to eq(15)
-      expect(in_deck.size).to eq(33)
+      expect(in_deck.size).to eq(37)
     end
   end
 
@@ -51,7 +51,7 @@ RSpec.describe PokerGame::Round do
       expect(subject.turn?).to be_truthy
       expect(current_deck.deck.map(&:state)).to include(:in_game)
       expect(in_game.size).to eq(16)
-      expect(in_deck.size).to eq(32)
+      expect(in_deck.size).to eq(36)
     end
   end
 
@@ -67,7 +67,7 @@ RSpec.describe PokerGame::Round do
       expect(subject.river?).to be_truthy
       expect(current_deck.deck.map(&:state)).to include(:in_game)
       expect(in_game.size).to eq(17)
-      expect(in_deck.size).to eq(31)
+      expect(in_deck.size).to eq(35)
     end
   end
 
