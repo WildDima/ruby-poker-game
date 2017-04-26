@@ -62,4 +62,13 @@ RSpec.describe PokerGame::Deck do
       expect(in_deck.size).to eq(47)
     end
   end
+
+  context 'call river from flop' do
+    subject { described_class.new }
+    let(:flop) { subject.preflop.flop }
+
+    it 'should flop' do
+      expect { flop.river }.to raise_error(Workflow::NoTransitionAllowed)
+    end
+  end
 end
