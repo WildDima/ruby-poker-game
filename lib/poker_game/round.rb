@@ -6,7 +6,8 @@ module PokerGame
   class Round
     include Workflow
 
-    attr_accessor :deck, :players, :table, :flop_cards, :turn_cards, :river_cards
+    attr_accessor :deck, :players, :player_cards, :table_cards,
+                  :flop_cards, :turn_cards, :river_cards
 
     workflow do
       state :blinds do
@@ -24,10 +25,11 @@ module PokerGame
       state :river
     end
 
-    def initialize(deck:, players:)
+    def initialize(deck:, players:, player_cards: nil, table_cards: nil)
       @deck = deck
-      @players = create_players players
-      @table = table_cards.new
+      @players = players
+      @player_cards = player_cards || create_player_cards
+      @table_cards = table_cards || table_cards_klass.new
     end
 
     def preflop
@@ -38,36 +40,36 @@ module PokerGame
     def flop
       to_flop!
       self.flop_cards = give_out(3)
-      table << flop_cards
+      table_cards << flop_cards
       self
     end
 
     def turn
       to_turn!
       self.turn_cards = give_out(1)
-      table << turn_cards
+      table_cards << turn_cards
       self
     end
 
     def river
       to_river!
       self.river_cards = give_out(1)
-      table << river_cards
+      table_cards << river_cards
       self
     end
 
     def winner
       return unless river?
 
-      players.map { |p| { player: p, hand: PokerHand.new(p.cards + table.cards) } }
-             .sort_by { |p| p[:hand] }.first[:player].player
+      player_cards.map { |p| { player: p, hand: PokerHand.new(p.cards + table_cards.cards) } }
+                  .sort_by { |p| p[:hand] }.reverse.first[:player].player
     end
 
     private
 
-    def create_players(players)
+    def create_player_cards
       players.map do |player|
-        player_cards.new(player: player, cards: give_out)
+        player_cards_klass.new(player: player, cards: give_out)
       end
     end
 
@@ -75,11 +77,11 @@ module PokerGame
       deck.give_out(count)
     end
 
-    def player_cards
+    def player_cards_klass
       PokerGame::PlayerCards
     end
 
-    def table_cards
+    def table_cards_klass
       PokerGame::TableCards
     end
   end

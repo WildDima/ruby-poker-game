@@ -9,7 +9,7 @@ RSpec.describe PokerGame::Round do
   let(:deck) { PokerGame::Deck.new }
   subject { described_class.new(deck: deck, players: players) }
   let(:current_deck) { subject.deck }
-  let(:round_players) { subject.players }
+  let(:round_players) { subject.player_cards }
   let(:round_deck) { subject.deck }
 
   context 'blind' do
@@ -83,32 +83,87 @@ RSpec.describe PokerGame::Round do
   context 'one round game' do
     it 'does game in one round' do
       expect(subject.players(&:cards?)).not_to include(false)
-      expect(subject.table.cards?).to be_falsy
+      expect(subject.table_cards.cards?).to be_falsy
       expect(subject.blinds?).to be_truthy
       expect(subject.winner).to be_falsy
 
       subject.preflop
-      expect(subject.table.cards?).to be_falsy
+      expect(subject.table_cards.cards?).to be_falsy
       expect(subject.preflop?).to be_truthy
       expect(subject.winner).to be_falsy
 
       subject.flop
-      expect(subject.table.cards.count).to eq 3
-      expect(subject.table.cards?).to be_truthy
+      expect(subject.table_cards.cards.count).to eq 3
+      expect(subject.table_cards.cards?).to be_truthy
       expect(subject.flop?).to be_truthy
       expect(subject.winner).to be_falsy
 
       subject.turn
-      expect(subject.table.cards.count).to eq 4
-      expect(subject.table.cards?).to be_truthy
+      expect(subject.table_cards.cards.count).to eq 4
+      expect(subject.table_cards.cards?).to be_truthy
       expect(subject.turn?).to be_truthy
       expect(subject.winner).to be_falsy
 
       subject.river
-      expect(subject.table.cards.count).to eq 5
-      expect(subject.table.cards?).to be_truthy
+      expect(subject.table_cards.cards.count).to eq 5
+      expect(subject.table_cards.cards?).to be_truthy
       expect(subject.river?).to be_truthy
       expect(subject.winner).to be_an(PokerGame::Player)
+    end
+  end
+
+  context 'one round game' do
+    let(:players) do
+      Helpers::PlayerFactory.new.create(2) do
+        { name: Faker::LordOfTheRings.character }
+      end
+    end
+
+    subject do
+      described_class.new(deck: deck,
+                          players: players,
+                          table_cards: table_cards,
+                          player_cards: player_cards)
+    end
+
+    let(:round) do
+      subject.to_preflop!
+      subject.to_flop!
+      subject.to_turn!
+      subject.to_river!
+      subject.table_cards = table_cards
+      subject.player_cards = player_cards
+      subject
+    end
+
+    context 'winner is first player' do
+      let(:table_cards) { PokerGame::TableCards.new cards: %w[Qc Qh Td 7c 3h] }
+
+      let(:player_cards) do
+        [
+          PokerGame::PlayerCards.new(player: players[0], cards: %w[Qd 8c]),
+          PokerGame::PlayerCards.new(player: players[1], cards: %w[3d Tc])
+        ]
+      end
+
+      it 'does return first player as winner' do
+        expect(round.winner).to eq(players[0])
+      end
+    end
+
+    context 'winner is second player' do
+      let(:table_cards) { PokerGame::TableCards.new cards: %w[Qc Qh Td Tc 3h] }
+
+      let(:player_cards) do
+        [
+          PokerGame::PlayerCards.new(player: players[0], cards: %w[Qd 8c]),
+          PokerGame::PlayerCards.new(player: players[1], cards: %w[Ts Th])
+        ]
+      end
+
+      it 'does return second player as winner' do
+        expect(round.winner).to eq(players[1])
+      end
     end
   end
 end
