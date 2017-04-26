@@ -5,70 +5,21 @@ RSpec.describe PokerGame::Deck do
     subject { described_class.new }
     let(:deck) { subject.deck }
 
-    it 'should countain 50 deck' do
-      expect(deck.size).to eq(52)
+    it 'should countain 52 cards' do
+      expect(deck.size).to eq(48)
       expect(deck.map(&:state)).to include(:in_deck)
       expect(deck.map(&:state)).not_to include(:in_game)
     end
   end
 
-  context 'flop' do
+  context 'give out cards' do
     subject { described_class.new }
-    let(:flop) { subject.preflop.flop }
-    let(:deck) { subject.deck }
-    let(:in_game) { subject.in_game }
-    let(:in_deck) { subject.in_deck }
 
-    it 'should flop' do
-      expect(flop.flop_cards).to be_an(Array)
-      expect(flop.flop_cards.size).to eq(3)
-      expect(subject.flop?).to be_truthy
-      expect(deck.map(&:state)).to include(:in_game)
-      expect(in_game.size).to eq(3)
-      expect(in_deck.size).to eq(49)
-    end
-  end
-
-  context 'turn' do
-    subject { described_class.new }
-    let(:turn) { subject.preflop.flop.turn }
-    let(:deck) { subject.deck }
-    let(:in_game) { subject.in_game }
-    let(:in_deck) { subject.in_deck }
-
-    it 'should turn' do
-      expect(turn.turn_cards).to be_an(Array)
-      expect(turn.turn_cards.size).to eq(1)
-      expect(subject.turn?).to be_truthy
-      expect(deck.map(&:state)).to include(:in_game)
-      expect(in_game.size).to eq(4)
-      expect(in_deck.size).to eq(48)
-    end
-  end
-
-  context 'river' do
-    subject { described_class.new }
-    let(:river) { subject.preflop.flop.turn.river }
-    let(:deck) { subject.deck }
-    let(:in_game) { subject.in_game }
-    let(:in_deck) { subject.in_deck }
-
-    it 'should river' do
-      expect(river.river_cards).to be_an(Array)
-      expect(river.river_cards.size).to eq(1)
-      expect(subject.river?).to be_truthy
-      expect(deck.map(&:state)).to include(:in_game)
-      expect(in_game.size).to eq(5)
-      expect(in_deck.size).to eq(47)
-    end
-  end
-
-  context 'call river from flop' do
-    subject { described_class.new }
-    let(:flop) { subject.preflop.flop }
-
-    it 'should flop' do
-      expect { flop.river }.to raise_error(Workflow::NoTransitionAllowed)
+    it 'should return 2 cards' do
+      expect(subject.give_out).to be_an(Array)
+      expect(subject.give_out.size).to be(2)
+      expect(subject.give_out(3).size).to be(3)
+      expect(subject.give_out(10).map(&:state)).not_to include(:in_deck)
     end
   end
 end

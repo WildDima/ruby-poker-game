@@ -20,4 +20,33 @@ RSpec.describe PokerGame::TexasHoldem do
   it 'should raise error' do
     expect { described_class.new(players: duplicated_players) }.to raise_error(RuntimeError)
   end
+
+  context 'new game' do
+    subject { described_class.new(players: players) }
+
+    it 'should start new game' do
+      # expect(subject.round.players(&:cards?)).not_to include(false)
+      # expect(subject.round.table.cards?).to be_falsy
+      # expect(subject.round.blinds?).to be_truthy
+
+      # subject.preflop
+      # expect(subject.round.table.cards?).to be_falsy
+      # expect(subject.round.preflop?).to be_truthy
+
+      # subject.flop
+      # expect(subject.round.table.cards.count).to eq 3
+      # expect(subject.round.table.cards?).to be_truthy
+      # expect(subject.round.flop?).to be_truthy
+
+      # subject.turn
+      # expect(subject.round.table.cards.count).to eq 4
+      # expect(subject.round.table.cards?).to be_truthy
+      # expect(subject.round.turn?).to be_truthy
+
+      # subject.river
+      # expect(subject.round.table.cards.count).to eq 5
+      # expect(subject.round.table.cards?).to be_truthy
+      # expect(subject.round.river?).to be_truthy
+    end
+  end
 end

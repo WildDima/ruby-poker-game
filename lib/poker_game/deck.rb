@@ -3,32 +3,10 @@ require 'workflow'
 module PokerGame
   # Deck
   class Deck
-    include Workflow
-
-    attr_accessor :deck, :flop_cards, :turn_cards, :river_cards
-
-    workflow do
-      state :blinds do
-        event :to_preflop, transition_to: :preflop
-      end
-      state :preflop do
-        event :to_flop, transition_to: :flop
-      end
-      state :flop do
-        event :to_turn, transition_to: :turn
-      end
-      state :turn do
-        event :to_river, transition_to: :river
-      end
-      state :river
-    end
+    attr_accessor :deck
 
     def initialize(deck: PokerGame::CARDS)
       @deck = create_deck(deck)
-    end
-
-    def shuffle
-      @deck.shuffle
     end
 
     def in_game
@@ -39,27 +17,10 @@ module PokerGame
       @deck.select(&:in_deck?)
     end
 
-    def preflop
-      to_preflop!
-      self
-    end
-
-    def flop
-      to_flop!
-      self.flop_cards = in_deck.sample(3).map(&:give_out!)
-      self
-    end
-
-    def turn
-      to_turn!
-      self.turn_cards = in_deck.sample(1).each(&:give_out!)
-      self
-    end
-
-    def river
-      to_river!
-      self.river_cards = in_deck.sample(1).each(&:give_out!)
-      self
+    def give_out(size = 2)
+      give_out_cards = in_deck.sample(size)
+      give_out_cards.map(&:give_out!)
+      give_out_cards
     end
 
     private
