@@ -8,6 +8,7 @@ module PokerGame
   require 'poker_game/player_cards'
   require 'poker_game/table_cards'
   require 'poker_game/round'
+  require 'poker_game/winner'
 
   CARDS = %w[Ac Ah Ad As Kc Kh Kd Ks
              Qc Qh Qd Qs Jc Jh Jd Js

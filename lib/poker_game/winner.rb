@@ -1,6 +1,9 @@
 require 'ruby-poker'
 
 module PokerGame
+  # Winner
+  #
+  # Class which determine the winner
   class Winner
     attr_accessor :table, :players
 
@@ -9,11 +12,11 @@ module PokerGame
       @players = players
     end
 
-    def winner_player
+    def player
       winner[:player_cards].player
     end
 
-    def winner_hand
+    def hand
       winner[:hand]
     end
 

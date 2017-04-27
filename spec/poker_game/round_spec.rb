@@ -82,111 +82,111 @@ RSpec.describe PokerGame::Round do
       expect(subject.players(&:cards?)).not_to include(false)
       expect(subject.table_cards.cards?).to be_falsy
       expect(subject.blinds?).to be_truthy
-      # expect(subject.winner).to be_falsy
+      expect(subject.winner).to be_falsy
 
       subject.preflop
       expect(subject.table_cards.cards?).to be_falsy
       expect(subject.preflop?).to be_truthy
-      # expect(subject.winner).to be_falsy
+      expect(subject.winner).to be_falsy
 
       subject.flop
       expect(subject.table_cards.cards.count).to eq 3
       expect(subject.table_cards.cards?).to be_truthy
       expect(subject.flop?).to be_truthy
-      # expect(subject.winner).to be_falsy
+      expect(subject.winner).to be_falsy
 
       subject.turn
       expect(subject.table_cards.cards.count).to eq 4
       expect(subject.table_cards.cards?).to be_truthy
       expect(subject.turn?).to be_truthy
-      # expect(subject.winner).to be_falsy
+      expect(subject.winner).to be_falsy
 
       subject.river
       expect(subject.table_cards.cards.count).to eq 5
       expect(subject.table_cards.cards?).to be_truthy
       expect(subject.river?).to be_truthy
-      # expect(subject.winner).to be_truthy
+      expect(subject.winner).to be_truthy
     end
   end
 
-  # context 'one round game' do
-    # let(:players) do
-    #   Helpers::PlayerFactory.new.create(2) do
-    #     { name: Faker::LordOfTheRings.character }
-    #   end
-    # end
+  context 'one round game' do
+   let(:players) do
+     Helpers::PlayerFactory.new.create(2) do
+       { name: Faker::LordOfTheRings.character }
+     end
+   end
 
-  #   subject do
-  #     described_class.new(deck: deck,
-  #                         players: players,
-  #                         table_cards: table_cards,
-  #                         player_cards: player_cards)
-  #   end
+    subject do
+      described_class.new(deck: deck,
+                          players: players,
+                          table_cards: table_cards,
+                          player_cards: player_cards)
+    end
 
-  #   let(:round) do
-  #     subject.to_preflop!
-  #     subject.to_flop!
-  #     subject.to_turn!
-  #     subject.to_river!
-  #     subject
-  #   end
+    let(:round) do
+      subject.to_preflop!
+      subject.to_flop!
+      subject.to_turn!
+      subject.to_river!
+      subject
+    end
 
-  #   context 'winner is first player' do
-  #     let(:table_cards) { PokerGame::TableCards.new cards: %w[Qc Qh Td 7c 3h] }
+    context 'winner is first player' do
+      let(:table_cards) { PokerGame::TableCards.new cards: %w[Qc Qh Td 7c 3h] }
 
-  #     let(:player_cards) do
-  #       [
-  #         PokerGame::PlayerCards.new(player: players[0], cards: %w[Qd 8c]),
-  #         PokerGame::PlayerCards.new(player: players[1], cards: %w[3d Tc])
-  #       ]
-  #     end
+      let(:player_cards) do
+        [
+          PokerGame::PlayerCards.new(player: players[0], cards: %w[Qd 8c]),
+          PokerGame::PlayerCards.new(player: players[1], cards: %w[3d Tc])
+        ]
+      end
 
-  #     it 'does return first player as winner' do
-  #       expect(round.winner[:player].player).to eq(players[0])
-  #       expect(round.winner[:hand].rank).to eq('Three of a kind')
-  #     end
-  #   end
+      it 'does return first player as winner' do
+        expect(round.winner.player).to eq(players[0])
+        expect(round.winner.hand.rank).to eq('Three of a kind')
+      end
+    end
 
-  #   context 'winner is second player' do
-  #     let(:table_cards) { PokerGame::TableCards.new cards: %w[Qc Qh Td Tc 3h] }
+    context 'winner is second player' do
+      let(:table_cards) { PokerGame::TableCards.new cards: %w[Qc Qh Td Tc 3h] }
 
-  #     let(:player_cards) do
-  #       [
-  #         PokerGame::PlayerCards.new(player: players[0], cards: %w[Qd 8c]),
-  #         PokerGame::PlayerCards.new(player: players[1], cards: %w[Ts Th])
-  #       ]
-  #     end
+      let(:player_cards) do
+        [
+          PokerGame::PlayerCards.new(player: players[0], cards: %w[Qd 8c]),
+          PokerGame::PlayerCards.new(player: players[1], cards: %w[Ts Th])
+        ]
+      end
 
-  #     it 'does return second player as winner' do
-  #       expect(round.winner[:player].player).to eq(players[1])
+      it 'does return second player as winner' do
+        expect(round.winner.player).to eq(players[1])
 
-  #       expect(round.winner[:hand].rank).to eq('Four of a kind')
-  #     end
-  #   end
+        expect(round.winner.hand.rank).to eq('Four of a kind')
+      end
+    end
 
-  #   context 'winner is third player' do
-  #     let(:players) do
-  #       Helpers::PlayerFactory.new.create(5) do
-  #         { name: Faker::LordOfTheRings.character }
-  #       end
-  #     end
+    context 'winner is third player' do
+      let(:players) do
+        Helpers::PlayerFactory.new.create(5) do
+          { name: Faker::LordOfTheRings.character }
+        end
+      end
 
-  #     let(:table_cards) { PokerGame::TableCards.new cards: %w[Qc Qh Th 9c 3h] }
+      let(:table_cards) { PokerGame::TableCards.new cards: %w[Qc Qh Th 9c 3h] }
 
-  #     let(:player_cards) do
-  #       [
-  #         PokerGame::PlayerCards.new(player: players[0], cards: %w[9d 8c]),
-  #         PokerGame::PlayerCards.new(player: players[1], cards: %w[Ts 9d]),
-  #         PokerGame::PlayerCards.new(player: players[2], cards: %w[2h Jh]),
-  #         PokerGame::PlayerCards.new(player: players[3], cards: %w[3s 7h]),
-  #         PokerGame::PlayerCards.new(player: players[4], cards: %w[4s 8h])
-  #       ]
-  #     end
+      let(:player_cards) do
+        [
+          PokerGame::PlayerCards.new(player: players[0], cards: %w[9d 8c]),
+          PokerGame::PlayerCards.new(player: players[1], cards: %w[Ts 9d]),
+          PokerGame::PlayerCards.new(player: players[2], cards: %w[2h Jh]),
+          PokerGame::PlayerCards.new(player: players[3], cards: %w[3s 7h]),
+          PokerGame::PlayerCards.new(player: players[4], cards: %w[4s 8h])
+        ]
+      end
 
-  #     it 'does return second player as winner' do
-  #       expect(round.winner[:player].player).to eq(players[2])
-  #       expect(round.winner[:hand].rank).to eq('Flush')
-  #     end
-  #   end
-  # end
+      it 'does return second player as winner' do
+        expect(round.winner.player).to eq(players[2])
+        expect(round.winner.hand.rank).to eq('Flush')
+      end
+    end
+  end
 end
