@@ -1,4 +1,5 @@
 require 'workflow'
+require 'ruby-poker'
 
 module PokerGame
   # Deck

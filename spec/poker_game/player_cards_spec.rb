@@ -8,7 +8,7 @@ RSpec.describe PokerGame::PlayerCards do
 
   it 'should create new player cards bound' do
     expect(subject.player).to eq player
-    expect(subject.cards).to eq cards
     expect(subject.cards?).to be_truthy
+    expect(subject.hand).to respond_to(:rank)
   end
 end

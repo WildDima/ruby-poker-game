@@ -1,3 +1,5 @@
+require 'ruby-poker'
+
 module PokerGame
   # TableCards
   class TableCards
@@ -21,5 +23,9 @@ module PokerGame
     end
 
     alias push <<
+
+    def hand
+      PokerHand.new cards
+    end
   end
 end

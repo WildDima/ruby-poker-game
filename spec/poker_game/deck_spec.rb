@@ -16,7 +16,6 @@ RSpec.describe PokerGame::Deck do
     subject { described_class.new }
 
     it 'should return 2 cards' do
-      expect(subject.give_out).to be_an(Array)
       expect(subject.give_out.size).to be(2)
       expect(subject.give_out(3).size).to be(3)
       expect(subject.give_out(10).map(&:state)).not_to include(:in_deck)
