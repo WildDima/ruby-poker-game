@@ -62,7 +62,7 @@ module PokerGame
       return unless river?
 
       player_cards.map { |p| { player: p, hand: PokerHand.new(p.cards + table_cards.cards) } }
-                  .sort_by { |p| p[:hand] }.reverse.first[:player].player
+                  .sort_by { |p| p[:hand] }.reverse.first
     end
 
     private

@@ -108,7 +108,7 @@ RSpec.describe PokerGame::Round do
       expect(subject.table_cards.cards.count).to eq 5
       expect(subject.table_cards.cards?).to be_truthy
       expect(subject.river?).to be_truthy
-      expect(subject.winner).to be_an(PokerGame::Player)
+      expect(subject.winner).to be_truthy
     end
   end
 
@@ -131,8 +131,6 @@ RSpec.describe PokerGame::Round do
       subject.to_flop!
       subject.to_turn!
       subject.to_river!
-      subject.table_cards = table_cards
-      subject.player_cards = player_cards
       subject
     end
 
@@ -147,7 +145,8 @@ RSpec.describe PokerGame::Round do
       end
 
       it 'does return first player as winner' do
-        expect(round.winner).to eq(players[0])
+        expect(round.winner[:player].player).to eq(players[0])
+        expect(round.winner[:hand].rank).to eq('Three of a kind')
       end
     end
 
@@ -162,7 +161,34 @@ RSpec.describe PokerGame::Round do
       end
 
       it 'does return second player as winner' do
-        expect(round.winner).to eq(players[1])
+        expect(round.winner[:player].player).to eq(players[1])
+
+        expect(round.winner[:hand].rank).to eq('Four of a kind')
+      end
+    end
+
+    context 'winner is third player' do
+      let(:players) do
+        Helpers::PlayerFactory.new.create(5) do
+          { name: Faker::LordOfTheRings.character }
+        end
+      end
+
+      let(:table_cards) { PokerGame::TableCards.new cards: %w[Qc Qh Th 9c 3h] }
+
+      let(:player_cards) do
+        [
+          PokerGame::PlayerCards.new(player: players[0], cards: %w[9d 8c]),
+          PokerGame::PlayerCards.new(player: players[1], cards: %w[Ts 9d]),
+          PokerGame::PlayerCards.new(player: players[2], cards: %w[2h Jh]),
+          PokerGame::PlayerCards.new(player: players[3], cards: %w[3s 7h]),
+          PokerGame::PlayerCards.new(player: players[4], cards: %w[4s 8h])
+        ]
+      end
+
+      it 'does return second player as winner' do
+        expect(round.winner[:player].player).to eq(players[2])
+        expect(round.winner[:hand].rank).to eq('Flush')
       end
     end
   end
