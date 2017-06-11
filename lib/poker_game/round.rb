@@ -25,7 +25,7 @@ module PokerGame
       state :river
     end
 
-    def initialize(deck:, players:, player_cards: nil, table_cards: nil)
+    def initialize(deck:, players:, player_cards: nil, table_cards: nil, round: 0)
       @deck = deck
       @players = players
       @player_cards = player_cards || create_player_cards
@@ -82,6 +82,10 @@ module PokerGame
 
     def table_cards_klass
       PokerGame::TableCards
+    end
+
+    def dealer
+      round % players.size
     end
   end
 end

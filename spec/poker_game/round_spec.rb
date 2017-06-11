@@ -110,11 +110,11 @@ RSpec.describe PokerGame::Round do
   end
 
   context 'one round game' do
-   let(:players) do
-     Helpers::PlayerFactory.new.create(2) do
-       { name: Faker::LordOfTheRings.character }
-     end
-   end
+    let(:players) do
+      Helpers::PlayerFactory.new.create(2) do
+        { name: Faker::LordOfTheRings.character }
+      end
+    end
 
     subject do
       described_class.new(deck: deck,
