@@ -7,7 +7,7 @@ module PokerGame
     include Workflow
 
     attr_accessor :deck, :players, :player_cards, :table_cards,
-                  :flop_cards, :turn_cards, :river_cards
+                  :flop_cards, :turn_cards, :river_cards, :round
 
     workflow do
       state :blinds do
@@ -30,6 +30,7 @@ module PokerGame
       @players = players
       @player_cards = player_cards || create_player_cards
       @table_cards = table_cards || table_cards_klass.new
+      @round = round
     end
 
     def preflop

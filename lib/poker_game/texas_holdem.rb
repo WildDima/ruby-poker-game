@@ -19,13 +19,11 @@ module PokerGame
     private
 
     def create_players(players)
-      ids = players.map(&:id)
-      return players if ids.uniq.length == ids.length
-      raise 'ids must be uniq'
+      Players.new(players)
     end
 
     def create_round
-      PokerGame::Round.new(players: players, deck: PokerGame::Deck.new)
+      Round.new(players: players, deck: Deck.new)
     end
   end
 end

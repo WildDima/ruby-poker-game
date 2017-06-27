@@ -2,8 +2,10 @@
 #
 # Library implements poker game
 module PokerGame
+  require 'ruby-poker'
   require 'poker_game/card'
   require 'poker_game/deck'
+  require 'poker_game/players'
   require 'poker_game/player'
   require 'poker_game/player_cards'
   require 'poker_game/table_cards'

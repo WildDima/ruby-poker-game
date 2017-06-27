@@ -1,5 +1,3 @@
-require 'ruby-poker'
-
 module PokerGame
   # PlayerCards
   class PlayerCards
